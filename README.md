@@ -1,4 +1,4 @@
-Laravel Taiwan Street Data (台灣街道資料 for Laravel)
+Laravel Taiwan Street Data
 ===============
 
 # 安裝需求
