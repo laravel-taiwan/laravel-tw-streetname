@@ -106,7 +106,7 @@
         private static function getCityId($name)
         {
             foreach (self::$citys as $key => $val) {
-                if ($val['name'] == $name) {
+                if (isset($val['name']) && $val['name'] == $name) {
                     return $val['uid'];
                 }
             }
@@ -116,7 +116,7 @@
         {
             foreach (self::$countrys as $country) {
                 foreach ($country as $key => $val) {
-                    if ($val['name'] == $name) {
+                    if (isset($val['name']) && $val['name'] == $name) {
                         return $val['uid'];
                     }
                 }
