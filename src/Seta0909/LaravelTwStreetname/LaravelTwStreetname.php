@@ -41,7 +41,7 @@
                 if (!is_array(self::$originData)) {
                     $streetString     = file_get_contents(dirname(__FILE__) . "/address_data.json");
                     self::$originData = json_decode($streetString, true);
-                    if(self::$cache=='apcache')
+                    if(self::$cache=='apcache' && count(self::$originData) > 0)
                     {
                         apc_store('LaravelTwStreetnameOrigin', self::$originData);
                     }
@@ -56,7 +56,7 @@
                         $temp[$val['country']] = $val['mailcode'];
                     }
                     self::$zipCode = $temp;
-                    if(self::$cache=='apcache')
+                    if(self::$cache=='apcache' && count(self::$zipCode) > 0)
                     {
                         apc_store('LaravelTwStreetnameZipCode', self::$zipCode);
                     }
@@ -70,7 +70,7 @@
                             self::$citys[] = $val;
                         }
                     }
-                    if(self::$cache=='apcache')
+                    if(self::$cache=='apcache' && count(self::$citys) > 0)
                     {
                         apc_store('LaravelTwStreetnameCitys', self::$citys);
                     }
@@ -80,7 +80,7 @@
                     foreach (self::$citys as $key => $val) {
                         self::$countrys[$val['uid']] = self::searchLink($val['uid']);
                     }
-                    if(self::$cache=='apcache')
+                    if(self::$cache=='apcache' && count(self::$countrys) > 0)
                     {
                         apc_store('LaravelTwStreetnameCountrys', self::$countrys);
                     }
@@ -95,7 +95,7 @@
                             }
                         }
                     }
-                    if(self::$cache=='apcache')
+                    if(self::$cache=='apcache' && count(self::$streets) > 0)
                     {
                         apc_store('LaravelTwStreetnameStreets', self::$streets);
                     }
