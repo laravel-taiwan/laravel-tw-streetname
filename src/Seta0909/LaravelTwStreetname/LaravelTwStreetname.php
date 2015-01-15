@@ -7,8 +7,6 @@
      */
 
     namespace Seta0909\LaravelTwStreetname;
-
-
     class LaravelTwStreetname
     {
         private static $instance;
@@ -25,11 +23,7 @@
                 $class          = __CLASS__;
                 self::$instance = new $class();
                 //先載載入快取
-                if(function_exists('opcache_compile_file'))
-                {
-                    self::$cache = 'opcache';
-                }
-                else if(function_exists('apc_fetch'))
+                if(function_exists('apc_fetch'))
                 {
                     self::$cache = 'apcache';
                     self::$originData = apc_fetch('LaravelTwStreetnameOrigin');
