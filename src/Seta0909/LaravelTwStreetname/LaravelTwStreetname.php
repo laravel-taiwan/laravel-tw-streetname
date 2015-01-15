@@ -23,37 +23,21 @@
                 $class          = __CLASS__;
                 self::$instance = new $class();
                 //先載載入快取
-                if(function_exists('apc_fetch'))
-                {
-                    self::$cache = 'apcache';
-                    self::$originData = apc_fetch('LaravelTwStreetnameOrigin');
-                    self::$citys      = apc_fetch('LaravelTwStreetnameCitys');
-                    self::$countrys   = apc_fetch('LaravelTwStreetnameCountrys');
-                    self::$streets    = apc_fetch('LaravelTwStreetnameStreets');
-                    self::$zipCode    = apc_fetch('LaravelTwStreetnameZipCode');
-                }
-                else
-                {
-                    session_start();
-                    self::$cache = 'session';
-                    self::$originData = $_SESSION['LaravelTwStreetnameOrigin'];
-                    self::$citys      = $_SESSION['LaravelTwStreetnameCitys'];
-                    self::$countrys   = $_SESSION['LaravelTwStreetnameCountrys'];
-                    self::$streets    = $_SESSION['LaravelTwStreetnameStreets'];
-                    self::$zipCode    = $_SESSION['LaravelTwStreetnameZipCode'];
-                }
+
+                session_start();
+                self::$cache = 'session';
+                self::$originData = $_SESSION['LaravelTwStreetnameOrigin'];
+                self::$citys      = $_SESSION['LaravelTwStreetnameCitys'];
+                self::$countrys   = $_SESSION['LaravelTwStreetnameCountrys'];
+                self::$streets    = $_SESSION['LaravelTwStreetnameStreets'];
+                self::$zipCode    = $_SESSION['LaravelTwStreetnameZipCode'];
+                
                 
                 //載入街道Json資料
                 if (!is_array(self::$originData)) {
                     $streetString     = file_get_contents(dirname(__FILE__) . "/address_data.json");
                     self::$originData = json_decode($streetString, true);
-                    if(self::$cache=='apcache' && count(self::$originData) > 0)
-                    {
-                        apc_store('LaravelTwStreetnameOrigin', self::$originData);
-                    }else{
-                        $_SESSION['LaravelTwStreetnameOrigin'] = self::$originData;
-                    }
-                    
+                    $_SESSION['LaravelTwStreetnameOrigin'] = self::$originData;
                 }
                 //載入郵遞區號Json資料
                 if (!is_array(self::$zipCode)) {
@@ -64,11 +48,7 @@
                         $temp[$val['country']] = $val['mailcode'];
                     }
                     self::$zipCode = $temp;
-                    if(self::$cache=='apcache' && count(self::$zipCode) > 0)
-                    {
-                        apc_store('LaravelTwStreetnameZipCode', self::$zipCode);
-                    }else{
-                        $_SESSION['LaravelTwStreetnameZipCode'] = self::$zipCode;
+                    $_SESSION['LaravelTwStreetnameZipCode'] = self::$zipCode;
                     }
                 }
 
@@ -80,24 +60,14 @@
                             self::$citys[] = $val;
                         }
                     }
-                    if(self::$cache=='apcache' && count(self::$citys) > 0)
-                    {
-                        apc_store('LaravelTwStreetnameCitys', self::$citys);
-                    }else{
-                        $_SESSION['LaravelTwStreetnameCitys'] = self::$citys;
-                    }
+                    $_SESSION['LaravelTwStreetnameCitys'] = self::$citys;
                 }
                 //載入鄉鎮區
                 if (!is_array(self::$countrys)) {
                     foreach (self::$citys as $key => $val) {
                         self::$countrys[$val['uid']] = self::searchLink($val['uid']);
                     }
-                    if(self::$cache=='apcache' && count(self::$countrys) > 0)
-                    {
-                        apc_store('LaravelTwStreetnameCountrys', self::$countrys);
-                    }else{
-                        $_SESSION['LaravelTwStreetnameCountrys'] = self::$countrys;
-                    }
+                    $_SESSION['LaravelTwStreetnameCountrys'] = self::$countrys;
                 }
                 //載入街道
                 if (!is_array(self::$streets)) {
@@ -109,12 +79,7 @@
                             }
                         }
                     }
-                    if(self::$cache=='apcache' && count(self::$streets) > 0)
-                    {
-                        apc_store('LaravelTwStreetnameStreets', self::$streets);
-                    }else{
-                        $_SESSION['LaravelTwStreetnameStreets'] = self::$streets;
-                    }
+                    $_SESSION['LaravelTwStreetnameStreets'] = self::$streets;
                 }
             }
         }
