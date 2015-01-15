@@ -1,11 +1,12 @@
 Laravel Taiwan Street Data
 ===============
 
-# 安裝需求
+# 安裝需求及注意事項
 
 1. 有使用APC Cache請確認有安裝APC
 2. 免安裝資料庫完全使用陣列
 3. 沒寫phpunit autotest
+4. 第一次載入會較慢，資料進cache後就會快很多
 
 # 安裝方式
 
