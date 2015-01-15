@@ -28,7 +28,6 @@
                 if(function_exists('opcache_compile_file'))
                 {
                     self::$cache = 'opcache';
-                    opcache_compile_file(dirname(__FILE__) . "/LaravelTwStreetname.php");
                 }
                 else if(function_exists('apc_fetch'))
                 {
