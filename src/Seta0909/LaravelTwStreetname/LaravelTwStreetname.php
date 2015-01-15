@@ -49,7 +49,6 @@
                     }
                     self::$zipCode = $temp;
                     $_SESSION['LaravelTwStreetnameZipCode'] = self::$zipCode;
-                    }
                 }
 
                 //初始化資料
