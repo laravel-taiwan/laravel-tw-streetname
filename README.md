@@ -10,7 +10,7 @@ Laravel Taiwan Street Data
 
 # 安裝方式
 
-1. 在 composer.json中加入 "laravel-taiwan/laravel-tw-streetname":"*"
+1. 在 composer.json中加入 "laravel-taiwan/laravel-tw-streetname":"dev-master"
 2. composer update
 3. 在 config/app.php 中加入 'Seta0909\LaravelTwStreetname\LaravelTwStreetnameServiceProvider'
 
