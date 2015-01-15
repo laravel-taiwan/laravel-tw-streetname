@@ -17,6 +17,7 @@
         private static $countrys;
         private static $streets;
         private static $zipCode;
+        private static $cache;
 
         private static function getInstance()
         {
@@ -24,17 +25,34 @@
                 $class          = __CLASS__;
                 self::$instance = new $class();
                 //先載載入快取
-
-                self::$originData = apc_fetch('LaravelTwStreetnameOrigin');
-                self::$citys      = apc_fetch('LaravelTwStreetnameCitys');
-                self::$countrys   = apc_fetch('LaravelTwStreetnameCountrys');
-                self::$streets    = apc_fetch('LaravelTwStreetnameStreets');
-                self::$zipCode    = apc_fetch('LaravelTwStreetnameZipCode');
+                if(function_exists('opcache_compile_file'))
+                {
+                    self::$cache = 'opcache';
+                    opcache_compile_file(dirname(__FILE__) . "/LaravelTwStreetname.php");
+                }
+                else if(function_exists('apc_fetch'))
+                {
+                    self::$cache = 'apcache';
+                    self::$originData = apc_fetch('LaravelTwStreetnameOrigin');
+                    self::$citys      = apc_fetch('LaravelTwStreetnameCitys');
+                    self::$countrys   = apc_fetch('LaravelTwStreetnameCountrys');
+                    self::$streets    = apc_fetch('LaravelTwStreetnameStreets');
+                    self::$zipCode    = apc_fetch('LaravelTwStreetnameZipCode');
+                }
+                else
+                {
+                    self::$cache = 'none';
+                }
+                
                 //載入街道Json資料
                 if (!is_array(self::$originData)) {
                     $streetString     = file_get_contents(dirname(__FILE__) . "/address_data.json");
                     self::$originData = json_decode($streetString, true);
-                    apc_store('LaravelTwStreetnameOrigin', self::$originData);
+                    if(self::$cache=='apcache')
+                    {
+                        apc_store('LaravelTwStreetnameOrigin', self::$originData);
+                    }
+                    
                 }
                 //載入郵遞區號Json資料
                 if (!is_array(self::$zipCode)) {
@@ -45,7 +63,10 @@
                         $temp[$val['country']] = $val['mailcode'];
                     }
                     self::$zipCode = $temp;
-                    apc_store('LaravelTwStreetnameZipCode', self::$zipCode);
+                    if(self::$cache=='apcache')
+                    {
+                        apc_store('LaravelTwStreetnameZipCode', self::$zipCode);
+                    }
                 }
 
                 //初始化資料
@@ -56,14 +77,20 @@
                             self::$citys[] = $val;
                         }
                     }
-                    apc_store('LaravelTwStreetnameCitys', self::$citys);
+                    if(self::$cache=='apcache')
+                    {
+                        apc_store('LaravelTwStreetnameCitys', self::$citys);
+                    }
                 }
                 //載入鄉鎮區
                 if (!is_array(self::$countrys)) {
                     foreach (self::$citys as $key => $val) {
                         self::$countrys[$val['uid']] = self::searchLink($val['uid']);
                     }
-                    apc_store('LaravelTwStreetnameCountrys', self::$countrys);
+                    if(self::$cache=='apcache')
+                    {
+                        apc_store('LaravelTwStreetnameCountrys', self::$countrys);
+                    }
                 }
                 //載入街道
                 if (!is_array(self::$streets)) {
@@ -72,7 +99,10 @@
                             self::$streets[$val['uid']] = self::searchLink($val['uid']);
                         }
                     }
-                    apc_store('LaravelTwStreetnameStreets', self::$streets);
+                    if(self::$cache=='apcache')
+                    {
+                        apc_store('LaravelTwStreetnameStreets', self::$streets);
+                    }
                 }
             }
         }
