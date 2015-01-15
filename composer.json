@@ -13,9 +13,6 @@
         "illuminate/support": "4.2.*"
     },
     "autoload": {
-        "classmap": [
-            "src/migrations"
-        ],
         "psr-0": {
             "Seta0909\\LaravelTwStreetname\\": "src/"
         }
