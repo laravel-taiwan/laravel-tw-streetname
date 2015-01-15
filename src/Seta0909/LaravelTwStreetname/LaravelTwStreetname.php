@@ -89,7 +89,10 @@
                 if (!is_array(self::$streets)) {
                     foreach (self::$countrys as $key => $country) {
                         foreach ($country as $val) {
-                            self::$streets[$val['uid']] = self::searchLink($val['uid']);
+                            if(isset($val['uid']))
+                            {
+                                self::$streets[$val['uid']] = self::searchLink($val['uid']);
+                            }
                         }
                     }
                     if(self::$cache=='apcache')
