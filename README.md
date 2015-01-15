@@ -5,6 +5,7 @@ Laravel Taiwan Street Data
 
 1. 有使用APC Cache請確認有安裝APC
 2. 免安裝資料庫完全使用陣列
+3. 沒寫phpunit autotest
 
 # 安裝方式
 
