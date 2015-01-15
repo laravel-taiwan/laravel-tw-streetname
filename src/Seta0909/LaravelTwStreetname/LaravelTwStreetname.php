@@ -26,11 +26,11 @@
 
                 session_start();
                 self::$cache = 'session';
-                self::$originData = $_SESSION['LaravelTwStreetnameOrigin'];
-                self::$citys      = $_SESSION['LaravelTwStreetnameCitys'];
-                self::$countrys   = $_SESSION['LaravelTwStreetnameCountrys'];
-                self::$streets    = $_SESSION['LaravelTwStreetnameStreets'];
-                self::$zipCode    = $_SESSION['LaravelTwStreetnameZipCode'];
+                self::$originData = (isset($_SESSION['LaravelTwStreetnameOrigin'])) ? $_SESSION['LaravelTwStreetnameOrigin']:'';
+                self::$citys      = (isset($_SESSION['LaravelTwStreetnameCitys'])) ? $_SESSION['LaravelTwStreetnameCitys']:'';
+                self::$countrys   = (isset($_SESSION['LaravelTwStreetnameCountrys'])) ? $_SESSION['LaravelTwStreetnameCountrys']:'';
+                self::$streets    = (isset($_SESSION['LaravelTwStreetnameStreets'])) ? $_SESSION['LaravelTwStreetnameStreets']:'';
+                self::$zipCode    = (isset($_SESSION['LaravelTwStreetnameZipCode'])) ? $_SESSION['LaravelTwStreetnameZipCode']:'';
                 
                 
                 //載入街道Json資料
