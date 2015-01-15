@@ -18,13 +18,13 @@ Laravel Taiwan Street Data
 ##取得縣市資料
 TwStreet::getCity();
 ##取得鄉鎮市區資料
-TwStreet::getCountry("台北市");//完整縣市名稱
+TwStreet::getCountry("台北市");//完整縣市名稱<br/>
 TwStreet::getCountry(1);//uid
 ##取得街道資料
-TwStreet::getStreet("中山區");//完整鄉鎮市區名稱
+TwStreet::getStreet("中山區");//完整鄉鎮市區名稱<br/>
 TwStreet::getCountry(2);//uid
 ##取得郵遞區號
-TwStreet::getCode("五股區");
+TwStreet::getCode("五股區");<br/>
 
 # 資料來源
 
