@@ -7,6 +7,7 @@
      */
 
     namespace Seta0909\LaravelTwStreetname;
+
     class LaravelTwStreetname
     {
         private static $instance;
@@ -15,7 +16,6 @@
         private static $countrys;
         private static $streets;
         private static $zipCode;
-        private static $cache;
 
         private static function getInstance()
         {
@@ -23,21 +23,28 @@
                 $class          = __CLASS__;
                 self::$instance = new $class();
                 //先載載入快取
+                if (file_exists(dirname(__FILE__) . "/Origin.json")) {
+                    self::$originData = json_decode(file_get_contents(dirname(__FILE__) . "/Origin.json"), true);
+                }
+                if (file_exists(dirname(__FILE__) . "/Citys.json")) {
+                    self::$citys = json_decode(file_get_contents(dirname(__FILE__) . "/Citys.json"), true);
+                }
+                if (file_exists(dirname(__FILE__) . "/Countrys.json")) {
+                    self::$countrys = json_decode(file_get_contents(dirname(__FILE__) . "/Countrys.json"), true);
+                }
+                if (file_exists(dirname(__FILE__) . "/Streets.json")) {
+                    self::$streets = json_decode(file_get_contents(dirname(__FILE__) . "/Streets.json"), true);
+                }
+                if (file_exists(dirname(__FILE__) . "/ZipCode.json")) {
+                    self::$zipCode = json_decode(file_get_contents(dirname(__FILE__) . "/ZipCode.json"), true);
+                }
 
-                session_start();
-                self::$cache = 'session';
-                self::$originData = (isset($_SESSION['LaravelTwStreetnameOrigin'])) ? $_SESSION['LaravelTwStreetnameOrigin']:'';
-                self::$citys      = (isset($_SESSION['LaravelTwStreetnameCitys'])) ? $_SESSION['LaravelTwStreetnameCitys']:'';
-                self::$countrys   = (isset($_SESSION['LaravelTwStreetnameCountrys'])) ? $_SESSION['LaravelTwStreetnameCountrys']:'';
-                self::$streets    = (isset($_SESSION['LaravelTwStreetnameStreets'])) ? $_SESSION['LaravelTwStreetnameStreets']:'';
-                self::$zipCode    = (isset($_SESSION['LaravelTwStreetnameZipCode'])) ? $_SESSION['LaravelTwStreetnameZipCode']:'';
-                
-                
+
                 //載入街道Json資料
                 if (!is_array(self::$originData)) {
                     $streetString     = file_get_contents(dirname(__FILE__) . "/address_data.json");
                     self::$originData = json_decode($streetString, true);
-                    $_SESSION['LaravelTwStreetnameOrigin'] = self::$originData;
+                    file_put_contents(dirname(__FILE__) . "/Origin.json", json_encode(self::$originData));
                 }
                 //載入郵遞區號Json資料
                 if (!is_array(self::$zipCode)) {
@@ -48,7 +55,7 @@
                         $temp[$val['country']] = $val['mailcode'];
                     }
                     self::$zipCode = $temp;
-                    $_SESSION['LaravelTwStreetnameZipCode'] = self::$zipCode;
+                    file_put_contents(dirname(__FILE__) . "/ZipCode.json", json_encode(self::$zipCode));
                 }
 
                 //初始化資料
@@ -59,26 +66,25 @@
                             self::$citys[] = $val;
                         }
                     }
-                    $_SESSION['LaravelTwStreetnameCitys'] = self::$citys;
+                    file_put_contents(dirname(__FILE__) . "/Citys.json", json_encode(self::$citys));
                 }
                 //載入鄉鎮區
                 if (!is_array(self::$countrys)) {
                     foreach (self::$citys as $key => $val) {
                         self::$countrys[$val['uid']] = self::searchLink($val['uid']);
                     }
-                    $_SESSION['LaravelTwStreetnameCountrys'] = self::$countrys;
+                    file_put_contents(dirname(__FILE__) . "/Countrys.json", json_encode(self::$countrys));
                 }
                 //載入街道
                 if (!is_array(self::$streets)) {
                     foreach (self::$countrys as $key => $country) {
                         foreach ($country as $val) {
-                            if(isset($val['uid']))
-                            {
+                            if (isset($val['uid'])) {
                                 self::$streets[$val['uid']] = self::searchLink($val['uid']);
                             }
                         }
                     }
-                    $_SESSION['LaravelTwStreetnameStreets'] = self::$streets;
+                    file_put_contents(dirname(__FILE__) . "/Streets.json", json_encode(self::$streets));
                 }
             }
         }
