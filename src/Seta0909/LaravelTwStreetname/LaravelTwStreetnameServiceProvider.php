@@ -1,4 +1,6 @@
-<?php namespace Seta0909\LaravelTwStreetname;
+<?php
+
+namespace Seta0909\LaravelTwStreetname;
 
 use Illuminate\Support\ServiceProvider;
 
@@ -30,7 +32,7 @@ class LaravelTwStreetnameServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app['TwStreet'] = $this->app->share(function ($app) {
-            return new LaravelTwStreetname;
+            return new LaravelTwStreetname();
         });
 
         $this->app->booting(function () {
@@ -48,5 +50,4 @@ class LaravelTwStreetnameServiceProvider extends ServiceProvider
     {
         return array('TwStreet');
     }
-
 }

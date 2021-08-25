@@ -1,0 +1,6 @@
+# Compoesr files
+/vendor
+/composer.lock
+
+# Artifacts files
+.phpunit.result.cache
