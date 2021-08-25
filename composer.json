@@ -11,11 +11,18 @@
     ],
     "require": {
         "php": ">=5.4.0",
-        "illuminate/support": "4.2.*"
+        "illuminate/support": "^4.2|^5.0|^6.0|^7.0|^8.0"
     },
     "autoload": {
         "psr-0": {
             "Seta0909\\LaravelTwStreetname\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Seta0909\\LaravelTwStreetname\\LaravelTwStreetnameServiceProvider"
+            ]
         }
     },
     "minimum-stability": "stable"
