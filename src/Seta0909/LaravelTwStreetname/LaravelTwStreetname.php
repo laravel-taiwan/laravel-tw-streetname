@@ -145,7 +145,6 @@ class LaravelTwStreetname
             return (isset(self::$streets[self::getCountryId($country)]))
                 ? self::$streets[self::getCountryId($country)]
                 : '';
-
         } elseif (is_integer($country)) {
             return (isset(self::$streets[$country])) ? self::$streets[$country] : '';
         } else {
