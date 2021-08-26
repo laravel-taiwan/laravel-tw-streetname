@@ -1,8 +1,7 @@
 {
     "name": "seta0909/laravel-tw-streetname",
-    "description": "",
+    "description": "Laravel Taiwan Street Data",
     "license": "MIT",
-    "version": "0.0.5",
     "authors": [
         {
             "name": "seta0909",
@@ -11,12 +10,18 @@
     ],
     "require": {
         "php": ">=5.4.0",
-        "illuminate/support": "4.2.*"
+        "illuminate/support": "^4.2"
+    },
+    "require-dev": {
+        "squizlabs/php_codesniffer": "^3.6"
     },
     "autoload": {
         "psr-0": {
             "Seta0909\\LaravelTwStreetname\\": "src/"
         }
     },
-    "minimum-stability": "stable"
+    "config": {
+        "preferred-install": "dist",
+        "sort-packages": true
+    }
 }

@@ -1,4 +1,6 @@
-<?php namespace Seta0909\LaravelTwStreetname\Facades;
+<?php
+
+namespace Seta0909\LaravelTwStreetname\Facades;
 
 use Illuminate\Support\Facades\Facade;
 
@@ -10,6 +12,8 @@ class LaravelTwStreetname extends Facade
      *
      * @return string
      */
-    protected static function getFacadeAccessor() { return 'TwStreet'; }
-
+    protected static function getFacadeAccessor()
+    {
+        return 'TwStreet';
+    }
 }

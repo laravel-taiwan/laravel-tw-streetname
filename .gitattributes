@@ -1,0 +1,7 @@
+# Enforce Unix newlines
+* text=lf
+
+# Exclude unused files
+/.github export-ignore
+/phpcs.xml export-ignore
+/phpunit.xml export-ignore
