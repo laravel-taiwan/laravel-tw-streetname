@@ -6,7 +6,6 @@ use Illuminate\Support\ServiceProvider;
 
 class LaravelTwStreetnameServiceProvider extends ServiceProvider
 {
-
     /**
      * Indicates if loading of the provider is deferred.
      *
